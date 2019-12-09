@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class SmartXmlAnalyzer {
     private static Logger LOGGER = Logger.getLogger(String.valueOf(SmartXmlAnalyzer.class));
     private static String CHARSET_NAME = "utf8";
-    private static final String targetElementId = "make-everything-ok-button";
 
     public static void main(String[] args) {
 
         String resourcePathOrigin = args[0];
         String resourcePathNext = args[1];
+        String targetElementId = args[2];
 
         Optional<Document> doc = getDocument(new File(resourcePathOrigin));
         Optional<Element> result = Optional.empty();
@@ -58,6 +58,7 @@ public class SmartXmlAnalyzer {
     }
 
     private static boolean isRelPresentAndSameText(Element element) {
+        LOGGER.info("Element attributes to analize: if contain rel attribute and proper text");
         return (!element.attr("rel").equals("")
                 &&
                 element.childNodes().get(0).toString().equals(" Make everything OK ")
@@ -65,6 +66,7 @@ public class SmartXmlAnalyzer {
     }
 
     private static boolean isSameClassAndParentParentClass(Element element, Element buttonOpt) {
+        LOGGER.info("Element attributes to analize: if is proper class and located correctly");
         return element.attr("class").equals(buttonOpt.attr("class"))
                 &&
                 element.parent().parent().attr("class")
